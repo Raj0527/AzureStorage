@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2022-09-01",
+      "name": "[concat(parameters('storageAccountName'), '/default/', parameters('blobContainerName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "publicAccess": "[parameters('publicAccessLevel')]",
+        "immutableStorageWithVersioning": {
+          "enabled": "[parameters('enableImmutableStorage')]",
+          "timeBasedRetention": {
+            "enabled": "[parameters('enableRetentionPolicy')]",
+            "retentionInDays": "[parameters('retentionDays')]"
+          }
+        }
+      }
+    }
+  ],
+  "parameters": {
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing storage account."
+      }
+    },
+    "blobContainerName": {
+      "type": "string",
+      "defaultValue": "data",
+      "metadata": {
+        "description": "Name of the blob container."
+      }
+    },
+    "publicAccessLevel": {
+      "type": "string",
+      "defaultValue": "None",
+      "allowedValues": [
+        "None",
+        "Blob",
+        "Container"
+      ],
+      "metadata": {
+        "description": "The level of public access to the blob container."
+      }
+    },
+    "enableImmutableStorage": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Enable or disable immutable storage with versioning."
+      }
+    },
+    "enableRetentionPolicy": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Enable or disable the time-based retention policy for immutable storage."
+      }
+    },
+    "retentionDays": {
+      "type": "int",
+      "defaultValue": 180,
+      "metadata": {
+        "description": "Number of days to retain blobs for the time-based retention policy."
+      }
+    }
+  }
+}
