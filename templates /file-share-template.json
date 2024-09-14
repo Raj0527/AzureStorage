@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2021-09-01",
+      "name": "[concat(parameters('storageAccountName'), '/default/', parameters('fileShareName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "accessTier": "[parameters('accessTier')]",
+        "shareQuota": "[parameters('shareQuota')]"
+      }
+    }
+  ],
+  "parameters": {
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing storage account."
+      }
+    },
+    "fileShareName": {
+      "type": "string",
+      "defaultValue": "share1",
+      "metadata": {
+        "description": "Name of the Azure File Share."
+      }
+    },
+    "shareQuota": {
+      "type": "int",
+      "defaultValue": 100,
+      "metadata": {
+        "description": "The quota of the file share in GB."
+      }
+    },
+    "accessTier": {
+      "type": "string",
+      "defaultValue": "TransactionOptimized",
+      "allowedValues": [
+        "TransactionOptimized",
+        "Hot",
+        "Cool"
+      ],
+      "metadata": {
+        "description": "The access tier of the Azure File Share."
+      }
+    }
+  }
+}
