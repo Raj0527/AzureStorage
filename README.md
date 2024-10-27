@@ -65,7 +65,7 @@ Steps:
 2. Alternatively, used Azure PowerShell or CLI commands to remove the resource group:
 ```
 Remove-AzResourceGroup -Name az104-rg7-lod43926459
-'''
+```
 To Delete the resorce group
 ```
 az group delete --name az104-rg7-lod43926459
