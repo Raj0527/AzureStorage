@@ -1,19 +1,47 @@
-# AzureStorage
-Title:- Manage Azure Storage
-Project Introduction: Describe the organization's scenario of storing files in Azure storage, reducing costs by leveraging storage tiers, and securing Azure blobs and file shares.
-Objectives:
-Create and configure a storage account.
-Configure secure blob storage and file shares.
-Use Azure Storage Browser to manage data.
+# Azure Storage Management Project
+I have performed each and every step in this project to minimize the cost of storage by moving infrequently accessed files to lower-priced storage tiers. Additionally, I explored Azure Storage's protection mechanisms, including network access, authentication, authorization, and replication. Finally, I evaluated Azure Files for hosting on-premises file shares.
 
-Technologies Used: Azure Storage Accounts, Azure Blob Storage, Azure File Shares, Storage Browser, PowerShell (for resource cleanup).
+Architecture Diagram
+![AzureStorageArchitecture](https://github.com/user-attachments/assets/a82d7428-7c2e-42ff-8ae3-effbc919c567)
 
-Tasks:
-
+Job Skills Covered:
 Task 1: Create and configure a storage account.
-
 Task 2: Create and configure secure blob storage.
+Task 3: Create and configure secure Azure file storage.
 
-Task 3: Create and configure Azure File storage.
+## Task 1: Create and Configure a Storage Account
+I created a storage account that uses geo-redundant storage without public access, ensuring cost efficiency and secure storage.
 
-Task 4: Restrict network access to the storage account.
+Steps:
+Signed in to the Azure portal.
+Created a new storage account under the resource group az104-rg7-lod43926459 with the following settings:
+Performance: Standard
+Redundancy: Geo-redundant storage
+Configured the storage account to disable public access and enabled private access from selected virtual networks.
+Configured Lifecycle Management to move blobs older than 30 days to cool storage.
+Deployed and reviewed the storage account configurations, including redundancy settings, and configured firewall rules to limit access to specific IP addresses.
+
+## Task 2: Create and Configure Secure Blob Storage
+I created a secure blob storage container to store unstructured data, with an added time-based retention policy for enhanced security.
+
+Steps:
+Created a blob container named data with private access.
+Set a time-based retention policy for 180 days.
+Uploaded a test file into a folder named securitytest within the container.
+Generated a SAS token to provide limited access to the uploaded file and confirmed that the public access level was set to private.
+
+## Task 3: Create and Configure Azure File Storage
+I created an Azure file share and explored its capabilities using the Azure Storage Browser.
+
+Steps:
+Created a file share named share1 with the Transaction optimized access tier.
+Used Azure Storage Browser to upload files to the file share and organized them using directories.
+Restricted network access to the storage account by creating a virtual network vnet1 and ensuring that only traffic from this network could access the storage resources.
+Cleanup Resources
+After completing the project, I ensured to clean up the resources to avoid unnecessary costs.
+
+Steps:
+Deleted the resource group using the Azure portal.
+Alternatively, used Azure PowerShell or CLI commands to remove the resource group:
+Remove-AzResourceGroup -Name resourceGroupName
+az group delete --name resourceGroupName
