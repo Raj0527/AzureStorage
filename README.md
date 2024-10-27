@@ -60,9 +60,7 @@ After completing the project, I ensured to clean up the resources to avoid unnec
 
 Steps:
 
-1. Deleted the resource group using the Azure portal.
-
-2. Alternatively, used Azure PowerShell or CLI commands to remove the resource group:
+Finally I have Deleted the resource group using Azure PowerShell:
 ```
 Remove-AzResourceGroup -Name az104-rg7-lod43926459
 ```
